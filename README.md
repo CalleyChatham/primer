@@ -47,3 +47,6 @@ Sketch in github repository
 
 Bonus: Use the Google Map API to assist the user to get directions, places to eat, etc.
 
+User Profile
+*Solo business traveler interested in finding local events to attend while on the company dime. The user may select to see if a major sports game or local music event.
+
