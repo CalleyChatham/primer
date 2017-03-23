@@ -9,14 +9,13 @@
 
 * Kim Harrod
 * Prasanth Nannapaneni
-* Callie O'Neil
+* Calley O'Neil
 * Hector Oropeza
 * Tony Panhhavong
 
 
 #### Project Description
-
-To help people find great places to eat and drink with "Fido" in tout.
+Find events happening in your destination city. 
 
 
 #### Sketch of Final Product
@@ -26,19 +25,25 @@ Sketch in github repository
 
 #### APIs to be used
 
-* Yelp API
-* City of Chicago Data Portal API
-* Google API
+* Eventful API
+* OpenWeatherMap API
+* Google Maps API (bonus) 
 
 
 #### Rough Breakdown of Tasks
 
-* Gather location information
-	* option of pulling location from phone/devics
-	* drop down of Chicago neighborhoods/drop down of cities
-	* text box(es) to enter in addresses
-* results of pet friendly places
-	* have filters that can be applied
-		* based on filters, places can be added/removed from the list
-* click on speciific place
-	* takes you to detailed information for the place/park/etc
+* Prompts user to enter the following information
+	* zipcode/city
+	* date or date range
+		* optional user input: 
+			*event category
+			*radius from the given location (not an exact location)
+	
+* Results Page
+	*the list of events that fits the user input
+	
+* Select the event
+	*Users event choice is displayed on page with weather for that area
+
+Bonus: Use the Google Map API to assist the user to get directions, places to eat, etc.
+
