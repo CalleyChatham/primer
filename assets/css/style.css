@@ -1,0 +1,13 @@
+body{
+	background:url(../images/cover-traveler.jpg);
+	background-size: cover;
+	color:#fff;
+	background-position: 50%;
+}
+#overlay{
+	background-color: rgba(0, 0, 0, 0.7)
+}
+.container{
+	padding-top:20px;
+	padding-bottom: 20px;
+}

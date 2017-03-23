@@ -1,22 +1,111 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Primer</title>
-	<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-  <script type="text/javascript" src="assets/js/app.js"></script>
-
+    <title>Primer</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/js/app.js"></script>
 </head>
-<body>
 
+<body>
+	<div id="overlay">
+	    <header>
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-md-12">
+	                    <h2>Primer</h2>
+	                    <p>About this company</p>
+	                </div>
+	            </div>
+	        </div>
+	    </header>
+
+	    <section class="container">
+	        <!-- Search Field -->
+	        <div class="row" id="primer-search">
+	            <div class="col-md-12">
+	                <form>
+	                    <div class="form-group">
+	                        <label>Enter a street address or zip code</label>
+	                        <input type="text" class="form-control" id="location-request" placeholder="555 N Main Street or 90210">
+	                    </div>
+	                    <!--We need to add the filter dropdowns-->
+	                    <button type="submit" class="btn btn-default">Submit</button>
+	                </form>
+	            </div>
+	            <!-- Search Field -->
+	        </div>
+	    </section>
+
+	    <section class="container">
+	        <!-- Results -->
+	        <div class="row" id="primer-results">
+	            <div class="col-md-3">
+	                <img src="http://placehold.it/300x300" class="img-responsive">
+	            </div>
+	            <div class="col-md-9">
+	                <h2>Event Name</h2>
+	                <div>Date & Start Time</div>
+	                <div>Venue Name</div>
+	                <div>Venue Address</div>
+	                <div>Venue City, State, Country</div>
+	                <div>Buy a ticket</div>
+	                <div>EVENT DESCRIPTION<br />
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	                </div>
+	            </div>
+	        </div>
+	        <!-- Results -->
+	    </section>
+
+	    <section class="container">
+	        <!-- Full Details -->
+	        <div class="row" id="primer-details">
+	            <div class="col-md-12">
+	            <h2>FULL EVENT DETAILS</h2>
+	            </div>
+
+	           	<div class="col-md-3">
+	                <img src="http://placehold.it/300x300" class="img-responsive">
+	            </div>
+	            <div class="col-md-9">
+	                <h2>Event Name</h2>
+	                <div>Date & Start Time</div>
+	                <div>Venue Name</div>
+	                <div>Venue Address</div>
+	                <div>Venue City, State, Country</div>
+	                <div>Buy a ticket</div>
+	                <div>
+	                	<h3>EVENT DESCRIPTION</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	                </div>
+	                <div>
+	                	##Map##
+	                </div>
+	            </div>
+	        </div>
+	        <!-- Full Details -->
+	    
+	    </section>
+
+	    <section class="container">
+	    FOOTER
+	    </section>
+	</div>
 </body>
+
 </html>
