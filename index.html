@@ -29,14 +29,41 @@
 	        <!-- Search Field -->
 	        <div class="row" id="primer-search">
 	            <div class="col-md-12">
-	                <form>
-	                    <div class="form-group">
-	                        <label>Enter a street address or zip code</label>
-	                        <input type="text" class="form-control" id="location-request" placeholder="555 N Main Street or 90210">
-	                    </div>
-	                    <!--We need to add the filter dropdowns-->
-	                    <button type="button" class="btn btn-default searchevents">Submit</button>
-	                </form>
+	                <form class="form-inline">
+						<div class="col-md-4">
+						    <label>Enter a city, state, or zip code</label><br />
+						    <input type="text" class="form-control" id="location-request" placeholder="Chicago, Illinois, 60602">
+						</div>
+
+						<div class="form-group col-md-2">
+							<label>Category</label><br />
+							<select id="category-select" class="form-control">
+							  <option value="Music">Music</option>
+							  <option value="Sports">Sports</option>
+							</select>
+						</div>
+
+						<div class="col-md-2">
+						    <label>Start Date</label><br />
+						    <select id="category-select" class="form-control">
+							  <option value="20170301">March 1,2017</option>
+							</select>
+						</div>
+
+						<div class="col-md-2">
+						    <label>End Date</label><br />
+						    <select id="category-select" class="form-control">
+							  <option value="20170401">April 1,2017</option>
+							</select>
+						</div>
+						
+						<div class="col-md-2">
+							<br />
+							<button type="button" class="btn btn-default" id="search-events">Search events</button>
+						</div>
+						
+					</form>
+
 	            </div>
 	            <!-- Search Field -->
 	        </div>
@@ -44,25 +71,20 @@
 
 	    <section class="container">
 	        <!-- Results -->
-	        <div class="row" id="primer-results">
+	        <div class="row" id="primer-result-list">
 	            <div class="col-md-3">
 	                <img src="http://placehold.it/300x300" class="img-responsive">
 	            </div>
 	            <div class="col-md-9">
-	                <h2>Event Name</h2>
-	                <div>Date & Start Time</div>
-	                <div>Venue Name</div>
-	                <div>Venue Address</div>
+	                <h2 class="event-name">Event Name</h2>
+	                <div class="event-date">Date & Start Time</div>
+	                <div class="venue-name">Venue Name</div>
+	                <div class="venue-address">Venue Address</div>
 	                <div>Venue City, State, Country</div>
-	                <div>Buy a ticket</div>
-	                <div>EVENT DESCRIPTION<br />
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	                </div>
+	               	<div id="list-details">
+	               		
+	               	</div>
+	              
 	            </div>
 	        </div>
 	        <!-- Results -->
@@ -103,9 +125,10 @@
 	    
 	    </section>
 
-	    <section class="container">
+	    <footer>
 	    FOOTER
-	    </section>
+	    </footer>
+
 	</div>
 </body>
 

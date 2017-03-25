@@ -3,11 +3,21 @@ body{
 	background-size: cover;
 	color:#fff;
 	background-position: 50%;
+	font-family: Open Sans,Tahoma,Arial;
 }
+
 #overlay{
 	background-color: rgba(0, 0, 0, 0.7)
 }
 .container{
 	padding-top:20px;
 	padding-bottom: 20px;
+}
+.form-inline .form-control{
+	width: 100%
+}
+footer{
+	width: 100%;
+	background-color: #000000;
+	color:white;
 }
