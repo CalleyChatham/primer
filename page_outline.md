@@ -1,6 +1,8 @@
 Page 1 (splash page)
   *Enter the zip code or address (required)
   *Enter date range (required)
+  *Distance
+  *Event Category
     
   
 Page 2 (event list)
