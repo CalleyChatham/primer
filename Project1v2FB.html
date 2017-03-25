@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Sign-Up To Search Events</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- LINK TO FIREBASE GOES HERE -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <br>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1 class="text-center">Search for Events by Destination</h1>
+    </div>
+
+    <div class="row">
+
+      <!-- Sign-Up Panel-->
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Search for Events</h3>
+          </div>
+          <div class="panel-body">
+
+    
+	
+	
+<form role="form">
+              <div class="form-group">
+                <label for="city-input">City:</label>
+                <input class="form-control" id="city-input" type="text" value="Chicago">
+              </div>
+              <div class="form-group">
+                <label for="eventtype-input">Event Type:</label>
+                <input class="form-control" id="eventtype-input" type="text" value="music">
+              </div>
+              <div class="form-group">
+                <label for="date-input">Date:</label>
+                <input class="form-control" id="date-input" type="text" value="04/27/2017">
+              </div>
+              <div class="form-group">
+                <label for="date-input">Distance:</label>
+                <input class="form-control" id="distance-input" type="text" value="50">
+              </div>
+ 
+              <button class="btn btn-default" id="search-event" type="submit">Submit</button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+        
+         <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Most Recent Search</h3>
+          </div>
+          <div class="panel-body" id="recent-search">
+            <h2 id="city-display"></h2>
+            <h4 id="eventtype-display"></h4>
+            <h4 id="date-display"></h4>
+            <p id="title-display"></p>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  
+  <script type="text/javascript" src="http://api.eventful.com/js/api">
+</script>
+
+  <!-- Script -->
+  <script>
+    // ==========================================
+
+    // Initialize Firebase
+      var config = {
+    apiKey: "AIzaSyBwxOCXyFWRo8vRnYhHn5jRqVARLZuuueU",
+    authDomain: "primer-c6531.firebaseapp.com",
+    databaseURL: "https://primer-c6531.firebaseio.com",
+    storageBucket: "primer-c6531.appspot.com",
+    messagingSenderId: "735582248365"
+  };
+  firebase.initializeApp(config);
+
+    // Create a variable to reference the database.
+    var database = firebase.database();
+
+    // Initial global variable values
+ 
+    var radius = 50;
+    var city = "";
+    var eventtype = "";
+    var date = "";
+    var searchResponse = [];
+    var appKey = "sS23z3239cvjhmN3";
+    var place   = "";
+    var what   = "";
+    var when = "";
+    var nodeId = "";
+    var venueName = "";
+
+// function to search via the Eventful API
+function searchEventful(location, event, date, distance) {
+ 
+   var oArgs = {
+      app_key: appKey ,
+      q: event,
+      where: location,
+      "date": date,
+      within: distance,
+      units: "miles",
+      "include": "tags,categories",
+      page_size: 5,
+      sort_order: "popularity"
+   };
+   EVDB.API.call("/events/search", oArgs, function(oData) {
+    searchResponse = oData.events.event;
+   console.log("the title is: " + searchResponse[0].title);
+   console.log(searchResponse);
+
+  
+
+	//for (i = 0; i < searchResponse.length; i++) {
+		
+		 // Pulling the desired info from the returned Eventful object
+//   		place = searchResponse[i].city_name;
+//   		venueName = searchResponse[i].venue_name;
+//   		title = searchResponse[i].title;
+//   		radius = searchResponse[i].within;
+		
+	   // set the results data for the current firebase node
+		    nodeId.set({
+			
+				searchResponse
+			
+ 
+     	 }); // end nodeId.set block
+  
+     
+    });  // end AJAX call
+ } // end function searchEventful
+
+
+// Submit Button Click function
+$("#search-event").on("click", function(event) {
+      event.preventDefault();
+
+      // Grabbed values from text boxes
+      place = $("#city-input").val().trim();
+      what = $("#eventtype-input").val().trim();
+      when = $("#date-input").val().trim();
+      distance = $("#distance-input").val().trim();
+
+      // Pass these values to the function that makes the AJAX call to Eventful
+      searchEventful(place, what, when, radius);    
+
+      // Create an empty firebase node to store the search results
+      nodeId = database.ref().push();
+
+	    console.log(nodeId);
+
+    }); // end submit button function
+
+
+// Firebase watcher + initial loader fires on any changes to a "value" in the database
+
+	database.ref().on("value", function(snapshot) {
+
+      // storing the snapshot.val() in a variable for convenience
+//      console.log("the snapshot is: " + snapshot.val());
+	var sv = snapshot.val();
+	//console.log(sv);
+      
+      // Getting an array of each key in the snapshot object
+      var svArr = Object.keys(sv);
+
+      // Finding the key for the last search
+      var lastIndex = svArr.length - 1;
+
+      var lastKey = svArr[lastIndex];
+
+      // Using the key for the last search to access the last added search object
+      var lastObj = sv[lastKey]
+
+      // Console.loging the data for the last search
+      console.log(lastObj.searchResponse[0].city_name);
+      console.log(what);
+      console.log(when);
+      console.log(lastObj.searchResponse[0].title);
+      console.log(lastObj.searchResponse[0].venue_name);
+ 
+      // Change the HTML to reflect the most recent search
+      $("#city-display").html(lastObj.searchResponse[0].city_name);
+      $("#eventtype-display").html(what);
+
+	for (i=0; i < 5; i++) {
+
+      $("#title-display").append(lastObj.searchResponse[i].title + " at " + lastObj.searchResponse[i].venue_name + "<br>" + "Date & Time: " + lastObj.searchResponse[i].start_time + "<br><br>");
+      
+      } // end for loop
+  
+
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+   }); // end firebase watcher
+
+    
+  </script>
+
+</body>
+
+</html>
