@@ -5,6 +5,7 @@ $(document).ready(function() {
     $("#search-events").on("click", function() {
 
         event.preventDefault();
+        $('body').attr('id','results');
 
         var appKey = "sS23z3239cvjhmN3"; //prasanth's app key for eventful
         var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
