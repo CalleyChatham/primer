@@ -14,7 +14,7 @@ $(document).ready(function() {
         // var dateConcatenated = startDate + "-" + endDate; //this is the format that date parameter will have to be put in to pass to api (yyyymmdd00-yyyymmdd-00)
         var dateConcatenated = startDate;
         var radius = 2; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
-        var resultSize = 100; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
+        var resultSize = 10; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
         var dropValue = $("#category-select").val();;
 
         console.log('Search Location ' + location);
@@ -61,14 +61,17 @@ $(document).ready(function() {
 
             // console.log($event.length);
             for (var i = 0; i < $event.length; i++) {
-                console.log('Venue Name  ' + $event[i].venue_name);
-                console.log('Description  ' + $event[i].venue_address);
-                $('.event-name').text($event[i].title);
-                $('.venue-name').text($event[i].venue_name);
-                $('.venue-address').text($event[i].venue_address);
-                $('.venue-address').text($event[i].venue_address);
-                
-                $('#list-detail').append($div);
+                console.log('Event Name  '+i+' '+ $event[i].title);
+
+                var eventName = '<h2>'+$event[i].title+'<h2>';
+                var eventVenue = '<div>'+$event[i].venue_name+'<div>';
+                var eventAddress = '<div>'+$event[i].venue_address+'<div>';
+                var eventCity = '<div>'+ $event[i].city_name +' '+ $event[i].region_name +', '+ $event[i].country_abbr+'<div>';
+
+                $('#list-details').append(eventName);
+                $('#list-details').append(eventVenue);
+                $('#list-details').append(eventAddress);
+                $('#list-details').append(eventCity);
 
                 //need this to call API and get event information
                 var eventId = $event[i].id;
@@ -115,10 +118,30 @@ $(document).ready(function() {
             }
         });
 
-
-
-
-
     });
 
 });
+
+// run the date picker code here ------------------------------------------------------------------------------------------------------------
+   $(document).ready(function () {
+
+        $("#start-date").datepicker({
+            dateFormat: "dd-M-yy",
+            minDate: 0,
+            onSelect: function (date) {          //onSelect sets the dates for the calendar
+                var endDate = $('#end-date');
+                var startDate = $(this).datepicker('getDate'); //getDate returns the current date for the datepicker (or null if no date avail)
+                var minDate = $(this).datepicker('getDate');  
+                endDate.datepicker('setDate', minDate); //sets the date for the datepicker. The new date may be a Date object or a string in the current date format
+                startDate.setDate(startDate.getDate() + 360);  //set the date of the end date to start date by adding + 1 day 
+
+                //sets endDate maxDate to the last day of 30 days window
+                endDate.datepicker('option', 'maxDate', startDate); //maxDate: The maximum selectable date. When set to null, there is no maximum.
+                endDate.datepicker('option', 'minDate', minDate);  //minDate:The minimum selectable date. When set to null, there is no minimum.
+                $(this).datepicker('option', 'minDate', minDate);
+            }
+        });
+        $('#end-date').datepicker({
+            dateFormat: "dd-M-yy"
+        });
+    });
