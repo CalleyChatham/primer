@@ -91,7 +91,6 @@ $(document).ready(function() {
 
         event.preventDefault();
          $('#list-details').empty();
-
         $('body').attr('id','results');
 
         var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
