@@ -3,40 +3,27 @@
 
 <head>
     <title>Primer</title>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
-    <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-
-    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-    <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
-    
-    <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.css">
-    
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-theme.min.css">
-
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <script type="text/javascript" src="assets/js/moment.js"></script>
-    
-    <!-- <script type="text/javascript" src="http://api.eventful.com/js/api"></script> -->
-    <script type="text/javascript" src="assets/js/api.js"></script>
-    
+    <script type="text/javascript" src="http://api.eventful.com/js/api"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
-
+     <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="assets/css/datepicker3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+     <!-- Datepicker javascript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </head>
 
 <body id="results">
     <div class="overlay">
-        <hea≠der>
+        <header>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -66,24 +53,24 @@
                                 <option value="Sports">Sports</option>
                             </select>
                         </div>
+                       <!-- Adding the date picker function two the start/end divs  -->
+
                         <div class="col-md-2">
                             <label>Start Date</label>
                             <br />
-                            <input type="text" class="form-control" id="start-date" placeholder="March 1, 2017">
-<!--                             <select id="category-select" class="form-control">
-                                 <option value="20170301">March 1,2017</option>
-                            </select> --> 
-
-                        </div>
-                        <div class="col-md-2">
-                            <label>End Date</label>
-                            <br />
-                            <input type="text" class="form-control" id="end-date" placeholder="April 1, 2017">
- <!--                            <select id="category-select" class="form-control">
-                                <option value="20170401">April 1,2017</option>
-                                <input type="text" id="datepicker"></p>
-                            </select> -->
-                        </div>
+                            <form method="post">
+                                <div class="form-group"> <!-- Date input -->
+                                    <input class="form-control" id="start-date" name="date" placeholder="depart" type="text"/>
+                                </div>
+                            </div>
+                                <div class="col-md-2">
+                                    <label>End Date</label>
+                                        <br />
+                                          <form method="post">
+                                              <div class="form-group"> <!-- Date input -->
+                                                <input class="form-control" id="end-date" name="date" placeholder="return" type="text"/>
+                                            </div>
+                                       </div>
                         <div class="col-md-2">
                             <br />
                             <button type="button" class="btn btn-default" id="search-events">Search events</button>
@@ -122,14 +109,9 @@
                 </div>
                 <div class="col-md-3">
                     <img src="http://placehold.it/300x300" class="img-responsive">
-                    <div id="event-image">
-                    </div>
                 </div>
                 <div class="col-md-9">
-                    <div id="event-details">
-                    </div>
-
-<!--                     <h2>Event Name</h2>
+                    <h2>Event Name</h2>
                     <div>Date & Start Time</div>
                     <div>Venue Name</div>
                     <div>Venue Address</div>
@@ -141,7 +123,7 @@
                     </div>
                     <div>
                         ##Map##
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <!-- Full Details -->
