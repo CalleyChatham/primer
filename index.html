@@ -11,6 +11,19 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script type="text/javascript" src="http://api.eventful.com/js/api"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
+
+<!-- Datepicker scripts ------------------------------------------------------------------------- -->
+<!-- Datepicker CSS -->
+    <link rel="stylesheet" href="assets/css/datepicker.css">
+    <link rel="stylesheet" href="assets/css/datepicker3.css">
+<!-- Datepicker javascript -->
+    <script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 </head>
 
 <body id="results">
@@ -45,20 +58,26 @@
                                 <option value="Sports">Sports</option>
                             </select>
                         </div>
+
+<!-- Adding the date picker function two the start/end divs ----------------------------------------- -->
                         <div class="col-md-2">
                             <label>Start Date</label>
                             <br />
-                            <select id="category-select" class="form-control">
-                                <option value="20170301">March 1,2017</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label>End Date</label>
-                            <br />
-                            <select id="category-select" class="form-control">
-                                <option value="20170401">April 1,2017</option>
-                            </select>
-                        </div>
+                            <form method="post">
+                                <div class="form-group"> <!-- Date input -->
+                                    <input class="form-control" id="start-date" name="date" placeholder="depart" type="text"/>
+                                </div>
+                            </div>
+                                <div class="col-md-2">
+                                    <label>End Date</label>
+                                        <br />
+                                            <form method="post">
+                                                <div class="form-group"> <!-- Date input -->
+                                                    <input class="form-control" id="end-date" name="date" placeholder="return" type="text"/>
+                                                </div>
+                                            </div>
+
+<!-- --------------------------------------------------------------------------------------------------- -->                        
                         <div class="col-md-2">
                             <br />
                             <button type="button" class="btn btn-default" id="search-events">Search events</button>
@@ -66,11 +85,11 @@
                     </form>
                 </div>
                 <!-- Search Field -->
-            	<div class="col-sm-12">
-            		<h2>Favorite places</h2>
+                <div class="col-sm-12">
+                    <h2>Favorite places</h2>
 
 
-            	</div>
+                </div>
             </div>
         </section>
         <section class="container results-view">
@@ -129,3 +148,5 @@
 </body>
 
 </html>
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help
