@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Primer Event Search</title>
+
+ <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Link to Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  
+</head> 
+
+<body>
+
+<div class="container">
+
+    <br>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+      
+        <h1 class="display-3">PRIMER</h1>
+        <p class="lead">Great Events at Your Next Destination</p>
+      
+    </div>
+
+    <div class="row">
+
+        <!-- Event Search Panel-->
+        <div class="col-lg-6">
+          
+            <div class="panel panel-default">
+              
+              <div class="panel-heading">
+                <h3 class="panel-title">Search for Events</h3>
+              </div>
+            
+              <div class="panel-body">
+
+                <form role="form">
+                      
+                      <div class="form-group">
+                        <label for="city-input">City:</label>
+                        <input class="form-control" id="city-input" type="text" placeholder="Chicago">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="eventtype-input">Event Type:</label>
+                        <input class="form-control" id="eventtype-input" type="text" placeholder="Music">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="date-input">Date:</label>
+                        <input class="form-control" id="date-input" type="text" placeholder="04/27/2017">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="distance-input">Distance:</label>
+                        <input class="form-control" id="distance-input" type="text" placeholder="50">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="count-input">Number of results:</label>
+                        <input class="form-control" id="count-input" type="text" placeholder="5">
+                      </div>
+         
+                      <button class="btn btn-default" id="search-event" type="submit">Submit</button>
+
+                </form>
+
+              </div>
+
+            </div>
+
+        </div>
+      
+        <!-- Display Events Panel--> 
+        <div class="col-lg-6">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                <h3 class="panel-title">Search Results</h3>
+                </div>
+                
+                <div class="panel-body" id="recent-search">
+                <h2 id="city-display"></h2>
+                <h4 id="eventtype-display"></h4>
+                <h4 id="date-display"></h4>
+                <p id="title-display"></p>
+                </div>
+              
+            </div>
+      
+        </div>
+
+    
+
+    </div>
+
+    <div class="row">
+
+       <!--Favorite Events Div-->
+          <div class="col-lg-6">
+            
+            <div class="panel panel-default">
+                
+                <div class="panel-heading">
+                <h3 class="panel-title">My Favorite Events</h3>
+                </div>
+              
+                <div class="panel-body" id="favorites">
+                </div>
+
+            </div>
+          
+          </div>
+      
+        <!--Event Detail Div-->
+
+          <div class="col-lg-6">
+             
+              <div class="panel panel-default">
+              
+              <div class="panel-heading">
+                <h3 class="panel-title">Event Detail</h3>
+              </div>
+              
+              <div class="panel-body" id="event-detail">
+              </div>
+            
+              </div>
+            
+          </div>
+
+      </div>
+
+    </div>
+  
+</div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+
+  <!-- Eventful API -->
+  <script type="text/javascript" src="http://api.eventful.com/js/api"></script>
+
+  <!-- Script -->
+  <script>
+
+    // ==========================================
+
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyBwxOCXyFWRo8vRnYhHn5jRqVARLZuuueU",
+    authDomain: "primer-c6531.firebaseapp.com",
+    databaseURL: "https://primer-c6531.firebaseio.com",
+    storageBucket: "primer-c6531.appspot.com",
+    messagingSenderId: "735582248365"
+    };
+
+    firebase.initializeApp(config);
+
+    // Create a variable to reference the database.
+    var database = firebase.database();
+
+    // Initial global variable values
+ 
+    var radius = 50;
+    var date = "";
+    var searchResponse = [];
+    var appKey = "sS23z3239cvjhmN3";
+    var place   = "";
+    var what   = "";
+    var when = "";
+    var nodeId = "";
+    var keyID = "";
+    var eventID = "";
+    var eventNum = "";
+    var count = "";
+    var eventURL = "";
+    var imageURL = "";
+    var lastObj = [];
+    var detailObj = [];
+    var eventArr = [];
+    var idList = [];
+    var starAscii = "&#9734;";
+    var sv = {};
+
+
+// function to search via the Eventful API
+function searchEventful(location, event, date, distance, resultNum) {
+ 
+   // clear the event number array, if anything is in it
+   eventArr = [];
+
+   var oArgs = {
+      app_key: appKey ,
+      q: event,
+      where: location,
+      "date": date,
+      within: distance,
+      units: "miles",
+      "include": "tags,categories",
+      page_size: resultNum,
+      sort_order: "popularity"
+   };
+   EVDB.API.call("/events/search", oArgs, function(oData) {
+    searchResponse = oData.events.event;
+ 
+		 nodeId.set({
+
+	     // set the results data for the current firebase node
+		
+				searchResponse
+			
+     	 }); // end nodeId.set block
+ 
+     
+    });  // end AJAX call
+ } // end function searchEventful
+
+
+// Submit Button Click function
+$("#search-event").on("click", function(event) {
+      event.preventDefault();
+
+      // Grabbed values from text boxes
+      place = $("#city-input").val().trim();
+      what = $("#eventtype-input").val().trim();
+      when = $("#date-input").val().trim();
+      distance = $("#distance-input").val().trim();
+      count = $("#count-input").val().trim();
+
+      // Create an empty firebase node to store the search results
+      nodeId = firebase.database().ref().child('/searches').push();
+
+      // Pass these values to the function that makes the AJAX call to Eventful
+      searchEventful(place, what, when, radius, count);    
+
+
+    }); // end submit button function
+
+// Firebase watcher + initial loader fires on any changes to a "value" in the database
+database.ref().child('/searches').on("value", function(snapshot) {
+
+
+      // storing the snapshot.val() in a variable for convenience
+	    sv = snapshot.val();
+	
+      // Getting an array of each key in the snapshot object
+      var svArr = Object.keys(sv);
+
+      // Finding the key for the last search
+      var lastIndex = svArr.length - 1;
+
+      var lastKey = svArr[lastIndex];
+    
+      // Using the key for the last search to access the last added search object
+      lastObj = sv[lastKey];
+      
+
+        // this retrieves the favorites list and displays it in the favorites div
+        database.ref().child('/favEvents').once("value", function(snapshot) {
+
+          var favList = snapshot.val();
+
+           $("#favorites").html("");
+
+          // check to make sure that the /favEvents branch exists
+          if (favList) {
+         
+          var favlistArr = Object.keys(favList);
+
+         
+
+          idList = [];
+
+          // then loop through the list of search keys in the favorites list.  Each key here matches the node key for the related search in the /searches branch of the firebase database
+          for (var i=0; i < favlistArr.length; i++ ) {
+
+            // retrieve the search results object corresponding to this search key
+            var currObj = favList[favlistArr[i]];
+
+            // retrieve the favorites object corresponding to this search key
+            var numObj = favList[favlistArr[i]];
+  
+            // push the event ID to the idList array
+            idList.push(favlistArr[i]);
+
+            //if this eventID is already a favorite
+          if (idList.indexOf(favlistArr[i]) > -1) {
+
+            // set the star to filled
+            starAscii = "&#9733;";
+
+           } else { 
+
+            // set the star to outlined
+            starAscii = "&#9734;";
+
+          } // end if/else// end if this eventID is already a favorite
+          
+            // now prepend each favorite event from the favorites list, including the star button to allow unfavoriting from the favorites div
+            $("#favorites").prepend("<button type='button' data-key=" + currObj.search_key +  " data-num=" + currObj.result_num + " data-eventID=" + favlistArr[i] + " class='favs' style='background-color:white; border:none; float:right'>" + starAscii + "</button><p class='eventtext' data-key=" + currObj.search_key +  " data-num=" + currObj.result_num + " data-eventID=" + favlistArr[i] + ">" + currObj.title  + " at " + currObj.venue_name + " in " + currObj.city_name + "<br>Date & Time: "  + currObj.start_time + "</p>");
+
+          } // end searches for loop
+
+        } // end if favList exists
+
+        }); // end favorites snapshot function
+
+  
+
+      // Change the HTML to reflect the current search results
+      $("#city-display").html(place);
+      $("#eventtype-display").html(what);
+
+      // loop to display the current search results and to set the favorites button
+      // first clear the div
+      $("#title-display").html("");
+
+      // loop through the search responses
+      for (i=0; i < searchResponse.length; i++) {
+
+          //if this eventID is already a favorite
+          if (idList.indexOf(lastObj.searchResponse[i].id) > -1) {
+
+            // set the star to filled
+            starAscii = "&#9733;";
+
+           } else { 
+
+            // set the star to outlined
+            starAscii = "&#9734;"; 
+
+          } // end if/else// end if this eventID is already a favorite
+
+        // now append each search result to the results div, in the process, creating favorites buttons tagged with data attributes storing the related search key, search result number, and event ID
+        $("#title-display").append("<button type='button' data-key=" + lastKey +  " data-num=" + i + " data-eventID=" + lastObj.searchResponse[i].id + " class='favs' style='background-color:white; border:none; float:right'>" + starAscii + "</button><p class='eventtext' data-key=" + lastKey +  " data-num=" + i + " data-eventID=" + lastObj.searchResponse[i].id + ">" + lastObj.searchResponse[i].title  + " at " + lastObj.searchResponse[i].venue_name + " in " + lastObj.searchResponse[i].city_name + "<br>Date & Time: "  + lastObj.searchResponse[i].start_time  + "</p>");
+      
+      } // end for loop
+     
+
+
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+   }); // end firebase watcher
+ 
+// this function creates the bindings on the favorites buttons that had been created above
+$(document).ready(function () {
+    $(document).on('click', ".favs", function (e) {
+        e.preventDefault();
+
+        // retrieve the search key for the current event
+        keyID = $(this).attr("data-key");
+
+        // retrieve the search result number for the current event
+        eventNum = $(this).attr("data-num");
+
+        // retrieve the eventID for the current event
+        eventID = $(this).attr("data-eventID");
+ 
+
+        //if this eventID has already been favorited switch it to unfavorite, else switch it to favorite
+        if (idList.indexOf(eventID) > -1) {
+
+          // find the index of the current eventID in the idList array
+          var idMatch = idList.indexOf(eventID);
+ 
+          // remove that event from the idList
+          idList.splice(idMatch, 1);
+
+          // remove the node corresponding to the current eventID from the /favEvents branch
+          firebase.database().ref().child('/favEvents/' + eventID).remove();
+  
+          // set the "venue_display" element of the database searchResponse to "unfavorite" 
+       		firebase.database().ref().child('/searches/' + keyID + '/searchResponse/' + eventNum).update({"venue_display": "unfavorite"});
+
+       		} else {
+
+            idList.push(eventID);
+
+            // construct a favorite-event object with a node equal to the search ID, and containing the search result object for that ID
+            var favObj = {};
+            favObj[eventID] = lastObj.searchResponse[eventNum];
+
+            // use update() to put the favorite-event object into the favEvents branch of the database
+            firebase.database().ref().child('/favEvents').update(favObj);     
+
+            // now add the search_key and result_num keys and associated values into the event object, so that we can unfavorite from the favorites div
+            firebase.database().ref().child('/favEvents/' + eventID).update({"search_key": keyID, "result_num": eventNum});            
+     
+            
+            // set the "venue_display" element of the database searchResponse to "favorite"            
+            firebase.database().ref().child('/searches/' + keyID + '/searchResponse/' + eventNum).update({"venue_display": "favorite"});
+            
+
+     	} // end if not already favorite
+      
+    }); // end star button on click function
+
+
+      // this adds an event binding on the event text, displayed in either the search result div or the favorites div, to cause the event detail to be displayed in the event-details div
+     $(document).on('click', ".eventtext", function (e) {
+        e.preventDefault();
+
+        // clear the div
+        $("#event-detail").html("");
+
+        // retrieve the search key for the current event
+        keyID = $(this).attr("data-key");
+
+        // retrieve the search result number for the current event
+        eventNum = $(this).attr("data-num");
+
+        // retrieve the eventID for the current event
+        eventID = $(this).attr("data-eventID");
+
+        // get the current search result for this event from the search results snapshot, using the search key 
+        detailObj = sv[keyID];
+
+        eventURL = detailObj.searchResponse[eventNum].url;
+
+        // some of the events don't have images.  This will cause a missing-image icon to display if there is no image
+        if (detailObj.searchResponse[eventNum].image) {
+
+          imageURL = detailObj.searchResponse[eventNum].image.medium.url;
+
+        } else {
+
+          // if there is no image, substitute this
+          imageURL = "http://cdn.wallpapersafari.com/24/38/9JAlnR.jpg";
+
+        };  // end if 
+
+
+          // we want the star to be rendered correctly, so
+          //if this eventID is already a favorite
+          if (idList.indexOf(eventID) > -1) {
+
+            // set the star to filled
+            starAscii = "&#9733;";
+
+           } else { 
+
+            // set the star to outlined
+            starAscii = "&#9734;";
+
+          } // end if/else// end if this eventID is already a favorite
+
+          // now we put the event detail info into the event-details div, making sure the event detail text has an eventID data attribute, and making sure the button definition has the right attributes to allow it to work for favoriting/unfavoriting
+         $("#event-detail").append("<p class='detailtext' data-eventID=" + eventID + "><img src='" + imageURL + "' align='right' width='140'><button type='button' data-key=" + keyID +  " data-num=" + eventNum + " data-eventID=" + eventID + " class='favs' style='background-color:white; border:none; float:right'>" + starAscii + "</button><b>" + detailObj.searchResponse[eventNum].title  + "</b> at " + detailObj.searchResponse[eventNum].venue_name + " in " + detailObj.searchResponse[eventNum].city_name + "<br>Date & Time: "  + detailObj.searchResponse[eventNum].start_time  + "<br>" + detailObj.searchResponse[eventNum].venue_address + "<br>Event URL: <a href='" + eventURL + "' target='_blank'>" + eventURL + "</a></p>");
+
+      }); // end eventtext on click function
+
+     // since the event-details div doesn't re-render itself for each database change, like the other divs do, we need to put a click binding on the detail text paragraph, so that it will fire, in addition to the star button click binding firing, for each click of the star button within this paragraph, to make sure the star is rendered in the correct filled or unfilled appearance
+     $(document).on('click', ".detailtext", function (e) {
+            //e.preventDefault();
+
+             // check to see which event ID this is
+            var thiseventID = $(this).attr("data-eventID");
+
+          // some of the events don't have images.  This will cause a missing-image icon to display if there is no image
+          if (detailObj.searchResponse[eventNum].image) {
+
+              imageURL = detailObj.searchResponse[eventNum].image.medium.url;
+
+          } else {
+
+              // if there is no image, substitute this
+              imageURL = "http://cdn.wallpapersafari.com/24/38/9JAlnR.jpg";
+
+          };  // end if 
+
+             //if this eventID is already a favorite
+            if (idList.indexOf(eventID) > -1) {
+
+                // set the star to filled
+                $(this).html("<p class='detailtext' data-eventID=" + eventID + "><img src='" + imageURL + "' align='right' width='140'><button type='button' data-key=" + keyID +  " data-num=" + eventNum + " data-eventID=" + eventID + " class='favs' style='background-color:white; border:none; float:right'>&#9733;</button><b>" + detailObj.searchResponse[eventNum].title  + "</b> at " + detailObj.searchResponse[eventNum].venue_name + " in " + detailObj.searchResponse[eventNum].city_name + "<br>Date & Time: "  + detailObj.searchResponse[eventNum].start_time   + "<br>" + detailObj.searchResponse[eventNum].venue_address + "<br>Event URL: <a href='" + eventURL + "' target='_blank'>" + eventURL + "</a></p>");
+
+            } else { 
+
+                // set the star to outlined
+                $(this).html("<p class='detailtext' data-eventID" + eventID + "><img src='" + imageURL + "' align='right' width='140'><button type='button' data-key=" + keyID +  " data-num=" + eventNum + " data-eventID=" + eventID + " class='favs' style='background-color:white; border:none; float:right'>&#9734;</button><b>" + detailObj.searchResponse[eventNum].title  + "</b> at " + detailObj.searchResponse[eventNum].venue_name + " in " + detailObj.searchResponse[eventNum].city_name + "<br>Date & Time: "  + detailObj.searchResponse[eventNum].start_time   + "<br>" + detailObj.searchResponse[eventNum].venue_address + "<br>Event URL: <a href='" + eventURL + "' target='_blank'>" + eventURL + "</a></p>");
+
+          } // end if this eventID is already a favorite
+
+      }); // end detail text on click function
+   
+}); // end document.ready function
+
+  
+  </script>
+</body>
+</html>
