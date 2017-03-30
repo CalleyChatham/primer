@@ -4,6 +4,7 @@ $(document).ready(function() {
 
     var appKey = "sS23z3239cvjhmN3"; //prasanth's app key for eventful
 
+    //This function sets the body id to "results" in order to display the results div 
     function goToResults(){
         $('body').attr('id','results');
     }
@@ -16,33 +17,45 @@ $(document).ready(function() {
       $( "#end-date" ).datepicker();
     });
 
-
+    //function to get event details
     function getEventDetails(eventId){
         console.log(eventId);
+        //Log the event ID to the console
+        //When this function is trigerred set the body id to full in order to switch the full "detailed" view
         $('body').attr('id','full');
+        //empty the event-detail container
         $('#event-details').empty();
+        //empty the event-image container
         $('#event-image').empty();
 
-        //need this to call API and get event information
+        //Need this to call API and get event information
         var eArgs = {
             app_key: appKey,
             id: eventId
         };
         EVDB.API.call("/events/get", eArgs, function(oData) {
             var eventinfo = oData;
-            var eventTitle = '<div>' + eventinfo.title +'<div>';
+
+            //Variables for the differentl data elements
+            var eventTitle = '<h2>' + eventinfo.title +'<h2>';
             var eventAddress = '<div>' + eventinfo.address +'<div>';
             var eventVenue = '<div>' + eventinfo.venue_name +'<div>';
-            var eventCity = '<div>' + eventinfo.city +'<div>';
+            var eventCity = '<div>' + eventinfo.city+', '+eventinfo.region + '<div>';
+            var eventDescription = '<div><h3>Description</h3>' + eventinfo.description +'<div>';
+            var eventURL = '<a href="'+eventinfo.url+'" target="_blank" class="more-info">'+ 'More info' +'<div>';
             
+            //We'll probably end up not using the event image... TBD
             var $eventImage = $("<img>");
             //var eventImageURL = eventinfo.images.image[0].medium.url;
             
-            var $resultsLink =  $("<a />", {
+            //Create a back to results link
+            var $resultsLink =  $('<a />', {
                     //id : $event[i].id,
                     //name : "link",
                     href : '', //$event[i].title,
+                    class: 'back-to-results',
                     text : 'Back to results',
+                    //on click prevent the detault, use the gotoResults function
                     click : ( function(e) {e.preventDefault(); goToResults(); return false; } )
                 });
 
@@ -51,18 +64,20 @@ $(document).ready(function() {
             //console.log(eventImageURL);
             //$eventImage.attr("src", eventImageURL);
 
-
-            var eventDate = '<div>'+ moment(eventinfo.start_time).format("dddd, MMMM Do YYYY, h:mm:ss a") +'<div>';
+            //Variable for the event date string
+            var eventDate = '<div id="event-date">'+ moment(eventinfo.start_time).format("dddd, MMMM Do YYYY, h:mm a") +'<div>';
             
 
             console.log(eventinfo);
-
+            //populates the event details - full event description
+            $('#event-details').append($resultsLink);
             $('#event-details').append(eventTitle);
             $('#event-details').append(eventDate);
             $('#event-details').append(eventVenue);
             $('#event-details').append(eventAddress);
             $('#event-details').append(eventCity);
-            $('#event-details').append($resultsLink);
+            $('#event-details').append(eventURL);
+            $('#event-details').append(eventDescription);
             //$('#event-image').append($eventImage);
 
             
@@ -164,7 +179,7 @@ $(document).ready(function() {
                 var eventVenue = '<div>'+$event[i].venue_name+'<div>';
                 var eventAddress = '<div>'+$event[i].venue_address+'<div>';
                 var eventCity = '<div>'+ $event[i].city_name +' '+ $event[i].region_name +', '+ $event[i].country_abbr+'<div>';
-                var eventDate = '<div>'+ moment($event[i].start_time).format("dddd, MMMM Do YYYY, h:mm:ss a") +'<div>';
+                var eventDate = '<div>'+ moment($event[i].start_time).format("dddd, MMMM Do YYYY, h:mm a") +'<div>';
                 //moment($event[i].venue_address).format("dddd, MMMM Do YYYY, h:mm:ss a");
 
                 $('#list-details').append($eventName);
