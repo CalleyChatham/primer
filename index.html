@@ -22,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-theme.min.css">
 
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
+
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -34,68 +37,87 @@
 
 </head>
 
-<body id="results">
+<body id="home">
     <div class="overlay">
-        <hea≠der>
+        <header>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Primer</h2>
+                        <h2 class="logo">Primer</h2>
                     </div>
                 </div>
             </div>
         </header>
-        <section class="container search-view">
-            <!-- Search Field -->
-            <div class="row" id="primer-search">
-                <div class="col-md-12">
-                    <h2>Find things to do while on the road</h2>
-                </div>
-                <div class="col-md-12">
-                    <form class="form-inline">
-                        <div class="col-md-4">
-                            <label>Enter a city, state, or zip code</label>
-                            <br />
-                            <input type="text" class="form-control" id="location-request" placeholder="Chicago, Illinois, 60602">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Category</label>
-                            <br />
-                            <select id="category-select" class="form-control">
-                                <option value="Music">Music</option>
-                                <option value="Sports">Sports</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Start Date</label>
-                            <br />
-                            <input type="text" class="form-control" id="start-date" placeholder="March 1, 2017">
-<!--                             <select id="category-select" class="form-control">
-                                 <option value="20170301">March 1,2017</option>
-                            </select> --> 
-
-                        </div>
-                        <div class="col-md-2">
-                            <label>End Date</label>
-                            <br />
-                            <input type="text" class="form-control" id="end-date" placeholder="April 1, 2017">
- <!--                            <select id="category-select" class="form-control">
-                                <option value="20170401">April 1,2017</option>
-                                <input type="text" id="datepicker"></p>
-                            </select> -->
-                        </div>
-                        <div class="col-md-2">
-                            <br />
-                            <button type="button" class="btn btn-default" id="search-events">Search events</button>
-                        </div>
-                    </form>
-                </div>
+        <section class="search-view">
+            <div class="container">
                 <!-- Search Field -->
-            	<div class="col-sm-12">
-            		<h2>Favorite places</h2>
+                <div class="row" id="primer-search">
+                    <div class="col-md-12">
+                        <h2>Find things to do while on the road</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <form class="form-inline">
+                            <div class="col-md-4">
+                                <label>Enter a city, state, or zip code</label>
+                                <br />
+                                <input type="text" class="form-control" id="location-request" placeholder="Chicago, Illinois, 60602">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Category</label>
+                                <br />
+                                <select id="category-select" class="form-control">
+                                    <option value="Music">Music</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Festivals">Festivals</option>
+                                    <option value="Film">Film</option>
+                                    <option value="Comedy">Comedy</option>
+                                    <option value="Kids-&-Family">Kids & Family</option>
+                                    <option value="Concerts-&-Tour Dates">Concerts & Tour Dates</option>
+                                    <option value="Nightlife-&-Singles">Nightlife & Singles</option>
+                                    <option value="Outdoors-&-Recreation">Outdoors & Recreation</option>
+                                    <option value="Art Galleries-&-Exhibits">Art Galleries & Exhibits</option>
+                                    <option value="Food-&-Wine">Food & Wine</option>
 
 
-            	</div>
+
+
+
+
+
+
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <br />
+                                <input type="text" class="form-control" id="start-date" placeholder="March 1, 2017">
+    <!--                             <select id="category-select" class="form-control">
+                                     <option value="20170301">March 1,2017</option>
+                                </select> --> 
+
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <br />
+                                <input type="text" class="form-control" id="end-date" placeholder="April 1, 2017">
+     <!--                            <select id="category-select" class="form-control">
+                                    <option value="20170401">April 1,2017</option>
+                                    <input type="text" id="datepicker"></p>
+                                </select> -->
+                            </div>
+                            <div class="col-md-2">
+                                <br />
+                                <button type="button" class="btn btn-default" id="search-events">Search events</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Search Field -->
+                	<div class="col-sm-12">
+                		<h2>Favorite places</h2>
+
+
+                	</div>
+                </div>
             </div>
         </section>
         <section class="container results-view">
@@ -109,6 +131,7 @@
                     <div>Venue City, State, Country</div>
  -->
                     <div id="list-details">
+                        <img src="assets/images/Loading_icon.gif" border="0" class="text-center" width="100%" height="100%">
                     </div>
                 </div>
             </div>

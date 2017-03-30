@@ -69,8 +69,6 @@ $(document).ready(function() {
 
         });
 
-
-
         //need API call here to get venue info outside of name
         // var venueId = $event[i].venue_id;
         // var vArgs = {
@@ -90,22 +88,21 @@ $(document).ready(function() {
     $("#search-events").on("click", function() {
 
         event.preventDefault();
-         $('#list-details').empty();
+        $('#list-details').empty();
         $('body').attr('id','results');
 
         var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
-        var categories = "music"; //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
+        var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
         var startDate = "20170301"; //place holder for start date.  eventually will be pulling tihs from the start date field.  we will also have to convert to the following format yyyymmdd00
         var endDate = "20170401"; //place holder for end date.  eventually will be pulling tihs from the end date field.  we will also have to convert to the following format yyyymmdd00
         // var dateConcatenated = startDate + "-" + endDate; //this is the format that date parameter will have to be put in to pass to api (yyyymmdd00-yyyymmdd-00)
         var dateConcatenated = startDate;
-        var radius = 2; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
-        var resultSize = 10; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
-        var dropValue = $("#category-select").val();;
+        var radius = 5; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
+        var resultSize = 20; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
+        
 
         console.log('Search Location ' + location);
         console.log('Search Category ' + categories);
-        console.log('Dropdown Value ' + dropValue);
         console.log('Date ' + dateConcatenated);
         console.log('Radius ' + radius);
         console.log('Number of results ' + resultSize);
@@ -132,16 +129,19 @@ $(document).ready(function() {
             category: categories,
             "date": dateConcatenated,
             within: radius,
-            //"include": "tags,categories",
+            // "include": "tags,categories",
             page_size: resultSize,
-            sort_order: "popularity", //options are date, popularity and relevance
+            sort_order: "relevance", //options are date, popularity and relevance
             sort_direction: "descending" //return most recent dates first
         };
+        console.log(oArgs.app_key,oArgs.location,oArgs.category,oArgs.within,oArgs.sort_order,oArgs.sort_direction);
+
         EVDB.API.call("/events/search", oArgs, function(oData) {
             var results = oData;
             var $event = $(results.events.event);
             var $div = $('<div>');
 
+            console.log(oArgs);
             console.log('API CALL RESULTS');
             console.log(results);
 
@@ -172,7 +172,6 @@ $(document).ready(function() {
                 $('#list-details').append(eventVenue);
                 $('#list-details').append(eventAddress);
                 $('#list-details').append(eventCity);
-                $('#list-details').append('<hr>');
 
 
 
