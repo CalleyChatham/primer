@@ -213,16 +213,16 @@ function getDBData(){
 
 
 
-
     $("#search-events").on("click", function() {
+
+        var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
+        var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
 
         event.preventDefault();
         $('#list-details').empty();
         $('body').attr('id','results');
+        $('body').attr('class',categories);
 
-        var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
-        var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
-        
         // var startDate = "20170301"; //place holder for start date.  eventually will be pulling tihs from the start date field.  we will also have to convert to the following format yyyymmdd00
         // var endDate = "20170401"; //place holder for end date.  eventually will be pulling tihs from the end date field.  we will also have to convert to the following format yyyymmdd00
 
@@ -234,6 +234,26 @@ function getDBData(){
         var radius = 5; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
         var resultSize = 20; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
         
+
+        // weather
+        function weatherCheck(){
+
+            $.ajax({ url: "http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid=9e89a078dc94549dc6adf54fa09c6b24&units=imperial"} ).done(function( data ) {
+              var currentWeather = data.weather[0].main;
+              var currentTemp = data.main.temp;
+              console.log('---------------------');
+              console.log('Weather data');
+              console.log(currentWeather, currentTemp);
+              console.log(data);
+              console.log('---------------------');
+             
+              $('#current-weather').append(currentWeather, currentTemp);
+
+            });
+          };
+        weatherCheck();
+        // weather
+
 
 
         //Create an empty firebase node to store the search results

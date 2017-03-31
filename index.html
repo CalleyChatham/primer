@@ -45,8 +45,11 @@
         <header>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <h2 class="logo"><a href="index.html" target="_parent">Primer</a></h2>
+                    </div>
+                    <div class="col-md-2">
+                        <div id="current-weather"></div>
                     </div>
                 </div>
             </div>
@@ -127,10 +130,18 @@
         <section class="container detailed-view">
             <!-- Full Details -->
             <div class="row" id="primer-details">
-                <div class="col-md-3">
-                    <div id="event-image">
+                    <div id="event-image" class="col-sm-12">
                     <!-- Place image or map into this section... -->
                     </div>
+                <div class="col-md-3">
+                    <!-- This iframe isn't the right size right now but if this is all we are doing we could do it this way. We can populate the src attribute with the location address once the user clicks on the event. I just harcoded some data as example... -->
+                    <iframe id="embedded-map"
+                      width="300"
+                      height="300"
+                      frameborder="0" style="border:0"
+                      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAXEguWnBnYAT9p6ocFeodUHHarISRpQ8Q
+                        &q=220 S Michigan Ave chicago il" allowfullscreen>
+                    </iframe>
                 </div>
                 <div class="col-md-9">
                     <div id="event-details">
