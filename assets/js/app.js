@@ -81,6 +81,18 @@ $(document).ready(function() {
             var $eventImage = $("<img>");
             //var eventImageURL = eventinfo.images.image[0].medium.url;
             
+
+
+            //set map address
+            var googleApiID = 'AIzaSyBab3Xg_CvWycB3_cR86ZpHIDgTR-aeM1I';
+            var googleAddressURL = 'https://www.google.com/maps/embed/v1/place?key='+googleApiID+'&q='+ eventinfo.address;
+            $('#embedded-map').attr('src',googleAddressURL);
+
+            //get directiosn link
+            var getDirectionsURL = 'http://maps.google.com/maps?f=d&source=s_d&saddr=&daddr='+ eventinfo.address;
+            $('.get-directions').attr('href',getDirectionsURL);
+
+
             //Create a back to results link
             var $resultsLink =  $('<a />', {
                     //id : $event[i].id,
@@ -214,112 +226,122 @@ function getDBData(){
 
 
     $("#search-events").on("click", function() {
+        //Check if location input has something in there
+        if (!$('#location-request').val()) {
+            $('#errorModal').modal('show');
+        } else {
+            //The Stuff
 
-        var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
-        var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
+            var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
+            var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
 
-        event.preventDefault();
-        $('#list-details').empty();
-        $('body').attr('id','results');
-        $('body').attr('class',categories);
+            event.preventDefault();
+            $('#list-details').empty();
+            $('body').attr('id','results');
+            $('body').attr('class',categories);
 
-        // var startDate = "20170301"; //place holder for start date.  eventually will be pulling tihs from the start date field.  we will also have to convert to the following format yyyymmdd00
-        // var endDate = "20170401"; //place holder for end date.  eventually will be pulling tihs from the end date field.  we will also have to convert to the following format yyyymmdd00
+            // var startDate = "20170301"; //place holder for start date.  eventually will be pulling tihs from the start date field.  we will also have to convert to the following format yyyymmdd00
+            // var endDate = "20170401"; //place holder for end date.  eventually will be pulling tihs from the end date field.  we will also have to convert to the following format yyyymmdd00
 
-        var startDate = moment($("#start-date").val()).format("YYYYMMDD") + "00";
-        var endDate = moment($("#end-date").val()).format("YYYYMMDD") + "00";
-       
-        //this is the format that date parameter will have to be put in to pass to api (yyyymmdd00-yyyymmdd-00)
-        var dateConcatenated = startDate + "-" + endDate;
-        var radius = 5; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
-        var resultSize = 20; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
+            var startDate = moment($("#start-date").val()).format("YYYYMMDD") + "00";
+            var endDate = moment($("#end-date").val()).format("YYYYMMDD") + "00";
+           
+            //this is the format that date parameter will have to be put in to pass to api (yyyymmdd00-yyyymmdd-00)
+            var dateConcatenated = startDate + "-" + endDate;
+            var radius = 5; //place holder for miles around address that we want to search.  eventually will be pulling from the miles around drop down box.
+            var resultSize = 20; //place holder for results that you want to return from the web service.  eventually will be pulling from the results drop down box.
+            
+
+            // weather
+            function weatherCheck(){
+
+                $.ajax({ url: "http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid=9e89a078dc94549dc6adf54fa09c6b24&units=imperial"} ).done(function( data ) {
+                  var currentConditions = data.weather[0].main;
+                  var currentTemp = data.main.temp+' '+'<span class="the-f">&#x2109;</span>';
+                  console.log('---------------------');
+                  console.log('Weather data');
+                  console.log(currentConditions, currentTemp);
+                  console.log(data);
+                  console.log('---------------------');
+                 
+                  $('#current-temp').html(currentTemp);
+                  $('#current-conditions').html(currentConditions);
+
+                });
+              };
+            weatherCheck();
+            // weather
+
         
 
-        // weather
-        function weatherCheck(){
+            //Create an empty firebase node to store the search results
+            nodeId = firebase.database().ref().child('/searches').push();
 
-            $.ajax({ url: "http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid=9e89a078dc94549dc6adf54fa09c6b24&units=imperial"} ).done(function( data ) {
-              var currentWeather = data.weather[0].main;
-              var currentTemp = data.main.temp;
-              console.log('---------------------');
-              console.log('Weather data');
-              console.log(currentWeather, currentTemp);
-              console.log(data);
-              console.log('---------------------');
-             
-              $('#current-weather').append(currentWeather, currentTemp);
 
+            console.log('Search Location ' + location);
+            console.log('Search Category ' + categories);
+            console.log('Date ' + dateConcatenated);
+            console.log('Radius ' + radius);
+            console.log('Number of results ' + resultSize);
+            console.log('---------------------');
+
+
+            //here is the EVDB API call that does work.   the secret sauce to having this working is the inclusion of the script tag below in the index.html page
+            //<script type="text/javascript" src="http://api.eventful.com/js/api"></script> -->secret sauce for EVDB.   won't work without including this above our app.js include
+            var oArgs = {
+                app_key: appKey,
+                location: location,
+                category: categories,
+                "date": dateConcatenated,
+                within: radius,
+                // "include": "tags,categories",
+                page_size: resultSize,
+                sort_order: "relevance", //options are date, popularity and relevance
+                sort_direction: "descending" //return most recent dates first
+            };
+            console.log(oArgs.app_key,oArgs.location,oArgs.category,oArgs.within,oArgs.sort_order,oArgs.sort_direction);
+
+            EVDB.API.call("/events/search", oArgs, function(oData) {
+                var results = oData;
+                var $event = $(results.events.event);
+                var $div = $('<div>');
+
+                console.log(oArgs);
+                console.log('API CALL RESULTS');
+                console.log(results);
+
+                // console.log($event.length);
+                for (var i = 0; i < $event.length; i++) {
+                    console.log('Event Name  '+i+' '+ $event[i].title);
+
+                    var $eventLink =  $("<a />", {
+                            id : $event[i].id,
+                            //name : "link",
+                            href : '', //$event[i].title,
+                            text : $event[i].title,
+                            click : ( function(e) {e.preventDefault(); getEventDetails(this.id); return false; } )
+                        });
+
+                    var $eventName = $("<h2>");
+                    $eventName.prepend($eventLink);
+
+
+                    var eventVenue = '<div>'+$event[i].venue_name+'<div>';
+                    var eventAddress = '<div>'+$event[i].venue_address+'<div>';
+                    var eventCity = '<div>'+ $event[i].city_name +' '+ $event[i].region_name +', '+ $event[i].country_abbr+'<div>';
+                    var eventDate = '<div>'+ moment($event[i].start_time).format("dddd, MMMM Do YYYY, h:mm a") +'<div>';
+                    //moment($event[i].venue_address).format("dddd, MMMM Do YYYY, h:mm:ss a");
+
+                    $('#list-details').append($eventName);
+                    $('#list-details').append(eventDate);
+                    $('#list-details').append(eventVenue);
+                    $('#list-details').append(eventAddress);
+                    $('#list-details').append(eventCity);
+                }
             });
-          };
-        weatherCheck();
-        // weather
 
-
-
-        //Create an empty firebase node to store the search results
-        nodeId = firebase.database().ref().child('/searches').push();
-
-
-        console.log('Search Location ' + location);
-        console.log('Search Category ' + categories);
-        console.log('Date ' + dateConcatenated);
-        console.log('Radius ' + radius);
-        console.log('Number of results ' + resultSize);
-        console.log('---------------------');
-
-
-        //here is the EVDB API call that does work.   the secret sauce to having this working is the inclusion of the script tag below in the index.html page
-        //<script type="text/javascript" src="http://api.eventful.com/js/api"></script> -->secret sauce for EVDB.   won't work without including this above our app.js include
-        var oArgs = {
-            app_key: appKey,
-            location: location,
-            category: categories,
-            "date": dateConcatenated,
-            within: radius,
-            // "include": "tags,categories",
-            page_size: resultSize,
-            sort_order: "relevance", //options are date, popularity and relevance
-            sort_direction: "descending" //return most recent dates first
-        };
-        console.log(oArgs.app_key,oArgs.location,oArgs.category,oArgs.within,oArgs.sort_order,oArgs.sort_direction);
-
-        EVDB.API.call("/events/search", oArgs, function(oData) {
-            var results = oData;
-            var $event = $(results.events.event);
-            var $div = $('<div>');
-
-            console.log(oArgs);
-            console.log('API CALL RESULTS');
-            console.log(results);
-
-            // console.log($event.length);
-            for (var i = 0; i < $event.length; i++) {
-                console.log('Event Name  '+i+' '+ $event[i].title);
-
-                var $eventLink =  $("<a />", {
-                        id : $event[i].id,
-                        //name : "link",
-                        href : '', //$event[i].title,
-                        text : $event[i].title,
-                        click : ( function(e) {e.preventDefault(); getEventDetails(this.id); return false; } )
-                    });
-
-                var $eventName = $("<h2>");
-                $eventName.prepend($eventLink);
-
-
-                var eventVenue = '<div>'+$event[i].venue_name+'<div>';
-                var eventAddress = '<div>'+$event[i].venue_address+'<div>';
-                var eventCity = '<div>'+ $event[i].city_name +' '+ $event[i].region_name +', '+ $event[i].country_abbr+'<div>';
-                var eventDate = '<div>'+ moment($event[i].start_time).format("dddd, MMMM Do YYYY, h:mm a") +'<div>';
-                //moment($event[i].venue_address).format("dddd, MMMM Do YYYY, h:mm:ss a");
-
-                $('#list-details').append($eventName);
-                $('#list-details').append(eventDate);
-                $('#list-details').append(eventVenue);
-                $('#list-details').append(eventAddress);
-                $('#list-details').append(eventCity);
-            }
-        });
+            //The Stuff
+        }
+        //Check if location input has a value
     });
 });

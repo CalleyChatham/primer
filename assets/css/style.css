@@ -12,6 +12,9 @@ body{
 a{
 	color:#E74C3C;
 }
+#errorModal{
+	color:#E74C3C;
+}
 header{
 	background:#fff;
 	color:#666666;
@@ -150,16 +153,82 @@ footer{
 	content:'\f053';
 	font-family: FontAwesome;
 	margin-right:10px;
+}
+#full .back-to-results{
+	border-bottom:1px solid #ccc;
 	font-size: 1.4em;
-	border-bottom:1px solid #f1f1f1;
-	padding-bottom: 3px;
+	padding-bottom: 5px;
+	display: block;
+	text-decoration: none;
 }
+
 #event-image{
-	background:#f1f1f1;
-	min-height: 150px;
+	min-height: 250px;
+	background-position: cover;
+	margin-bottom: 15px;
 }
 
+#current-temp {
+    font-size: 3em;
+    font-weight: bold;
+}
+#current-conditions{
+	font-style: italic;
+    color: #666666;
+}
+.the-f{
+	font-size: 14px;
+	font-family: tahoma;
+}
+a.get-directions:after{
+	content:'\f054';
+	font-family: FontAwesome;
+	margin-left:10px;
+}
+a.get-directions{
+	display:block;
+	color:#fff;
+	background:#E74C3C;
+	border-radius: 5px;
+	text-decoration: none;
+	padding:10px;
+	text-align: center;
+}
+.music #event-image{
+	background:url(../images/music.jpg);
+}
 
+.sports #event-image{
+	background:url(../images/sports.jpg);
+}
+
+.comedy #event-image{
+	background:url(../images/comedy.jpg);
+}
+
+.festivals_parades #event-image{
+	background:url(../images/festivals.jpg);
+}
+
+.food #event-image{
+	background:url(../images/food.jpg);
+}
+
+.art #event-image{
+	background:url(../images/art.jpg);
+}
+
+.holiday #event-image{
+	background:url(../images/holiday.jpg);
+}
+
+.singles_social #event-image{
+	background:url(../images/nightlife.jpg);
+}
+
+.outdoors_recreation #event-image{
+	background:url(../images/outdoors.jpg);
+}
 
 
 
