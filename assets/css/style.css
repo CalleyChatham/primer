@@ -11,6 +11,9 @@ body{
 a{
 	color:#E74C3C;
 }
+select{
+	width: 100%;
+}
 #errorModal{
 	color:#E74C3C;
 }
@@ -216,6 +219,24 @@ a.get-directions{
 	padding:10px;
 	text-align: center;
 }
+a.more-info:after{
+	content:'\f054';
+	font-family: FontAwesome;
+	margin-left:10px;
+}
+a.more-info{
+	display:inline-block;
+	color:#fff;
+	background:#E74C3C;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left: 30px;
+	padding-right:30px;
+	text-align: center;
+	margin-top:10px;
+}
 .music #event-image{
 	background:url(../images/music.jpg);
 }
@@ -252,6 +273,11 @@ a.get-directions{
 	background:url(../images/outdoors.jpg);
 }
 
-
+@media (max-width: 989px) {
+	#home .search-view{
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+}
 
 

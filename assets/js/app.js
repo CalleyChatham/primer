@@ -66,14 +66,14 @@ $(document).ready(function() {
 
 
             //Variables for the differentl data elements
-            var eventTitle = '<h2>' + eventinfo.title +'<h2>';
-            var eventAddress = '<div>' + eventinfo.address +'<div>';
-            var eventVenue = '<div>' + eventinfo.venue_name +'<div>';
-            var eventCity = '<div>' + eventinfo.city+', '+eventinfo.region + '<div>';
+            var eventTitle = '<h2>' + eventinfo.title +'</h2>';
+            var eventAddress = '<div>' + eventinfo.address +'</div>';
+            var eventVenue = '<div>' + eventinfo.venue_name +'</div>';
+            var eventCity = '<div>' + eventinfo.city+', '+eventinfo.region + '</div>';
             if(eventinfo.description){
-                var eventDescription = '<div><h3>Description</h3>' + eventinfo.description +'<div>';
+                var eventDescription = '<div><h3>Description</h3>' + eventinfo.description +'</div>';
             }
-            var eventURL = '<a href="'+eventinfo.url+'" target="_blank" class="more-info">'+ 'More info' +'<div>';
+            var eventURL = '<a href="'+eventinfo.url+'" target="_blank" class="more-info">'+ 'More info' +'</a>';
             
             //We'll probably end up not using the event image... TBD
             var $eventImage = $("<img>");
