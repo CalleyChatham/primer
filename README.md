@@ -2,6 +2,7 @@
 # Primer
 
 ## Project #1
+### Presentation: https://docs.google.com/presentation/d/1oKE9AYgPGpq7LwgdENlAZGxlHvKlFe14-Wn_bdWfRO0/edit?usp=sharing
 
 -----------------------------------------
 
