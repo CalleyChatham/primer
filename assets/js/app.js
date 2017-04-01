@@ -58,8 +58,6 @@ $(document).ready(function() {
         EVDB.API.call("/events/get", eArgs, function(oData) {
             var eventinfo = oData;
 
-
-
             nodeId.set({
                // set the results data for the current firebase node
                 eventinfo
@@ -231,7 +229,7 @@ function getDBData(){
             $('#errorModal').modal('show');
         } else {
             //The Stuff
-
+            $('#spinner').css('display','block');
             var location = $("#location-request").val(); //currently our text box prompts for an address.   i believe address is not allowed, but rather we can pass in a combo of - city, state, country; zip code; venue ID; geocoordinates.  so we should probably fix our textbox to match this eventually
             var categories = $("#category-select").val(); //place for categories to search.  eventually will be pulling this from the categories list box.   multiple categories will have to be separated by commas
 
@@ -302,6 +300,8 @@ function getDBData(){
             console.log(oArgs.app_key,oArgs.location,oArgs.category,oArgs.within,oArgs.sort_order,oArgs.sort_direction);
 
             EVDB.API.call("/events/search", oArgs, function(oData) {
+                $('#spinner').css('display','none');
+       
                 var results = oData;
                 var $event = $(results.events.event);
                 var $div = $('<div>');
